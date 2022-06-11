@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ari</title>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        font-size: 16px;
+        line-height: 1.5;
+        color: #333;
+        background-color: #fafafa;
+      }
+
+      h1 {
+        font-size: 6em;
+        font-weight: normal;
+        margin: 0 0 0.5em 0;
+      }
+
+      div {
+        margin: auto;
+        max-width: 800px;
+      }
+
+      button {
+        box-sizing: border-box;
+        appearance: none;
+        background-color: transparent;
+        border-radius: 0.6em;
+        cursor: pointer;
+        align-self: center;
+        font-size: 1rem;
+        line-height: 1;
+        text-decoration: none;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: "Montserrat", sans-serif;
+        font-weight: 700;
+        display: inline-block;
+        padding: 0.5em 1em;
+        margin: 0 0.5em 0 0;
+        border-color: #3498db;
+        color: #fff;
+        box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+        transition: all 150ms ease-in-out;
+      }
+
+      button:hover {
+        box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h1 id="arithmetic">다음 클릭</h1>
+
+      <button id="btn">다음</button>
+    </div>
+
+    <script>
+      var btn = document.getElementById("btn");
+      var arithmetic = document.getElementById("arithmetic");
+
+      function getRandomNumber(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+
+      let nextProblem = false;
+
+      var num1 = getRandomNumber(10, 99);
+      var num2 = getRandomNumber(10, 99);
+      var num3 = getRandomNumber(1, 9);
+      var operator = getRandomNumber(0, 2);
+      let result = 0;
+
+      btn.addEventListener("click", () => {
+        if (!nextProblem) {
+          switch (operator) {
+            case 0:
+              result = num1 + num2;
+              break;
+            case 1:
+              result = num1 - num2;
+              break;
+            case 2:
+              result = num3 * num1;
+              break;
+            default:
+              alert("오류");
+              break;
+          }
+
+          arithmetic.innerHTML = `
+            ${operator == 0 || operator == 1 ? num1 : num3} ${
+            operator == 0
+              ? "+"
+              : operator == 1
+              ? "-"
+              : operator == 2
+              ? "x"
+              : "x"
+          } ${operator == 0 || operator == 1 ? num2 : num1}
+          `;
+          console.log(operator);
+          nextProblem = true;
+          btn.innerText = "정답확인";
+        } else {
+          arithmetic.innerHTML = `
+          ${operator == 0 || operator == 1 ? num1 : num3} ${
+            operator == 0
+              ? "+"
+              : operator == 1
+              ? "-"
+              : operator == 2
+              ? "x"
+              : "x"
+          } ${operator == 0 || operator == 1 ? num2 : num1} = ${result}`;
+          nextProblem = false;
+
+          num1 = getRandomNumber(10, 99);
+          num2 = getRandomNumber(10, 99);
+          num3 = getRandomNumber(1, 9);
+          operator = getRandomNumber(0, 2);
+          btn.innerText = "다음";
+        }
+      });
+    </script>
+  </body>
+</html>
